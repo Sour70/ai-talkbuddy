@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speech to Text</title>
+</head>
+<body>
+    <button id="recordButton">Start Recording</button>
+    <p id="outputText"></p>
+    
+   
+    <!-- <script>
+      function speakText(text) {
+          if ('speechSynthesis' in window) {
+              let speech = new SpeechSynthesisUtterance(text);
+              speech.lang = 'en-US';  // Set language
+              speech.rate = 1;  // Normal speed
+              speech.pitch = 1;  // Normal pitch
+              speech.volume = 1; // Full volume
+
+              // Ensure speech synthesis is ready before speaking
+              window.speechSynthesis.cancel(); // Clear any ongoing speech
+              setTimeout(() => {
+                  window.speechSynthesis.speak(speech);
+              }, 500); // Small delay to ensure voices are loaded
+          } else {
+              alert("Text-to-Speech is not supported in this browser.");
+          }
+      }
+
+      document.addEventListener("DOMContentLoaded", function() {
+          speakText("Hello, good morning! I am Sourabh.");
+      });
+  </script> -->
+</body>
+</html>
+
+<script>
+  let isSpeaking = false;
+  let aiTimeout = null;
+
+  function toggleSpeaking() {
+    const pulseRingAI = document.getElementById('pulseRingAI');
+    const aiWave = document.getElementById('aiWave');
+
+    if (!isSpeaking) {
+      isSpeaking = true;
+      speakBtn.textContent = "Stop";
+
+      // User starts speaking
+      pulseRingUser.classList.remove('hidden');
+      userWave.classList.remove('hidden');
+
+      // After 2 seconds, AI starts responding
+      aiTimeout = setTimeout(() => {
+        // Stop user animation
+        pulseRingUser.classList.add('hidden');
+        userWave.classList.add('hidden');
+
+        // Start AI animation
+        pulseRingAI.classList.remove('hidden');
+        aiWave.classList.remove('hidden');
+
+        // Stop AI animation after 3 seconds
+        aiTimeout = setTimeout(() => {
+          pulseRingAI.classList.add('hidden');
+          aiWave.classList.add('hidden');
+          speakBtn.textContent = "Start";
+          isSpeaking = false;
+        }, 3000);
+      }, 2000);
+    } else {
+      // Stop everything
+      isSpeaking = false;
+      speakBtn.textContent = "Start";
+      clearTimeout(aiTimeout);
+      pulseRingUser.classList.add('hidden');
+      pulseRingAI.classList.add('hidden');
+      userWave.classList.add('hidden');
+      aiWave.classList.add('hidden');
+    }
+  }
+</script>
